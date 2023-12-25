@@ -8,6 +8,11 @@ body {
   border-radius: 15px;
   padding: 15px;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 h1 {
   color: #ff4500;
@@ -45,4 +50,5 @@ input {
   border: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 9999; /* Added higher z-index */
 }
+
 

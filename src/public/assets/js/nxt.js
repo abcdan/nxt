@@ -76,12 +76,20 @@ function onSubmit() {
           showConfirmButton: false,
           timer: 4500,
         });
+        // Reload the statistics after submission
+        fetch("/api/statistics/links")
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("uploads").textContent =
+              " (" + data.links + ")";
+          });
       }
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
+
 function checkURL() {
   var url = document.getElementById("url").value;
   var button = document.getElementById("actionButton");
