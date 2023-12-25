@@ -3,6 +3,10 @@
   <head>
     <title>nxt - Link Shortener</title>
     <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
       name="description"
       content="nxt - The best privacy-first, open-source link shortener service. Fast, secure and free."
     />
@@ -118,15 +122,23 @@
               })
                 .then((response) => response.json())
                 .then((data) => {
-                  document.getElementById("url").value = data.shortUrl;
-                  navigator.clipboard.writeText(data.shortUrl);
-                  Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "URL has been copied to clipboard",
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
+                  if (data.error) {
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: data.error,
+                    });
+                  } else {
+                    document.getElementById("url").value = data.shortUrl;
+                    navigator.clipboard.writeText(data.shortUrl);
+                    Swal.fire({
+                      position: "top-end",
+                      icon: "success",
+                      title: "URL has been copied to clipboard",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                  }
                 })
                 .catch((error) => {
                   console.error("Error:", error);
