@@ -1,0 +1,48 @@
+body {
+  background-color: #000000;
+  color: #ff4500;
+}
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 15px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+h1 {
+  color: #ff4500;
+  font-size: 50px;
+  font-weight: bold;
+}
+button {
+  background-color: #ff4500;
+  color: #ffffff;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+a {
+  color: #ff4500;
+  text-decoration: none;
+}
+a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+input {
+  color: #ffffff;
+}
+.swal2-popup {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 15px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 9999; /* Added higher z-index */
+}
+

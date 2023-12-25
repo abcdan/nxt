@@ -28,7 +28,7 @@ func main() {
 	app.Get("/health", func(c *fiber.Ctx) error {
 		return c.SendStatus(200)
 	})
-	
+
 	app.Use("/api", limiter.New(limiter.Config{
 		Max:        50,
 		Expiration: 1 * time.Minute,
@@ -37,6 +37,7 @@ func main() {
 
 	routes.LinkRoutes(app)
 	routes.RedirectRoutes(app)
+	routes.StatisticsRoutes(app)
 
 	app.Use(func(c *fiber.Ctx) error {
 		if c.Path() == "*" {

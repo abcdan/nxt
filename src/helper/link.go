@@ -31,3 +31,11 @@ func InsertLink(link *models.Link) error {
     })
     return err
 }
+
+func TotalLinks() (int64, error) {
+    count, err := db.Collection("links").CountDocuments(context.TODO(), bson.M{})
+    if err != nil {
+        return 0, err
+    }
+    return count, nil
+}
