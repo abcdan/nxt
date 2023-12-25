@@ -34,6 +34,15 @@ function getPasscode() {
 }
 function onSubmit() {
   var url = document.getElementById("url").value;
+  var urlPattern = /^(http|https):\/\/[^ "]+$/;
+  if (!urlPattern.test(url)) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please enter a valid URL.",
+    });
+    return;
+  }
   if (url.includes(domain)) {
     Swal.fire({
       icon: "error",
