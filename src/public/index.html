@@ -90,17 +90,10 @@
         }
         return passcode;
       }
-      function onSubmit() {
-        var url = document.getElementById("url").value;
-        if (url.includes(domain)) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "You cannot shorten URLs that are the same as the domain we are currently on.",
-          });
-          return;
-        }
+      function getPasscode() {
         if (localStorage.getItem("nxtup")) {
+          return localStorage.getItem("nxtup");
+        } else {
           const defaultPasscode = generatePasscode();
           Swal.fire({
             title: "Enter your passcode",
@@ -113,40 +106,52 @@
             preConfirm: (passcode) => {
               localStorage.setItem("nxtup", passcode);
               document.getElementById("passcode").value = passcode;
-              fetch("/api/link", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ url: url, passcode: passcode }),
-              })
-                .then((response) => response.json())
-                .then((data) => {
-                  if (data.error) {
-                    Swal.fire({
-                      icon: "error",
-                      title: "Oops...",
-                      text: data.error,
-                    });
-                  } else {
-                    document.getElementById("url").value = data.shortUrl;
-                    navigator.clipboard.writeText(data.shortUrl);
-                    Swal.fire({
-                      position: "top-end",
-                      icon: "success",
-                      title: "URL has been copied to clipboard",
-                      showConfirmButton: false,
-                      timer: 1500,
-                    });
-                  }
-                })
-                .catch((error) => {
-                  console.error("Error:", error);
-                });
             },
             allowOutsideClick: () => !Swal.isLoading(),
           });
         }
+      }
+      function onSubmit() {
+        var url = document.getElementById("url").value;
+        if (url.includes(domain)) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "You cannot shorten URLs that are the same as the domain we are currently on.",
+          });
+          return;
+        }
+        var passcode = getPasscode();
+        fetch("/api/link", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url: url, passcode: passcode }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: data.error,
+              });
+            } else {
+              document.getElementById("url").value = data.shortUrl;
+              navigator.clipboard.writeText(data.shortUrl);
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "URL has been copied to clipboard",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       }
     </script>
   </head>
@@ -163,12 +168,7 @@
         A privacy-first link shortener that does not have accounts and fully
         relies on a passcode to manage your links.
       </p>
-      <form
-        id="shortenForm"
-        action="/api/link"
-        method="post"
-        onsubmit="event.preventDefault(); onSubmit()"
-      >
+      <form id="shortenForm" onsubmit="event.preventDefault(); onSubmit()">
         <div class="flex items-center border-b border-teal-500 py-2">
           <input
             id="url"
@@ -187,7 +187,8 @@
           />
           <button
             class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-            type="submit"
+            type="button"
+            onclick="onSubmit()"
           >
             Shorten
           </button>

@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"nxt/helper"
 	"nxt/routes"
 	"os"
 	"time"
@@ -18,6 +19,8 @@ func main() {
 	if err != nil {
 		log.Println("Could not load .env file, using environment variables.")
 	}
+
+	helper.ConnectDB()
 
 	app.Static("/", "./public")
 	app.Static("/404", "./public/404.html")
