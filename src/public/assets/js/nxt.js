@@ -76,7 +76,10 @@ function onSubmit() {
           showConfirmButton: false,
           timer: 4500,
         });
-        // Reload the statistics after submission
+        document.querySelector(".card").style.display = "none";
+        setTimeout(function () {
+          document.querySelector(".card").style.display = "block";
+        }, 4500);
         fetch("/api/statistics/links")
           .then((response) => response.json())
           .then((data) => {
