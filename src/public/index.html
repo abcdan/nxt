@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>nxt - Link Shortener</title>
+    <meta
+      name="description"
+      content="nxt - The best privacy-first, open-source link shortener service. Fast, secure and free."
+    />
+    <meta
+      name="keywords"
+      content="URL, Shortener, Link, nxt, Privacy-first, Open-source"
+    />
+    <meta name="author" content="nxt" />
+    <meta property="og:title" content="nxt - Link Shortener" />
+    <meta
+      property="og:description"
+      content="nxt - The best privacy-first, open-source link shortener service. Fast, secure and free."
+    />
+    <meta property="og:image" content="path/to/logo.png" />
+    <meta property="og:url" content="https://nxt.mom" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <style>
+      body {
+        background-color: #000000;
+        color: #ff4500;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        border-radius: 15px;
+        padding: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      h1 {
+        color: #ff4500;
+        font-size: 50px;
+        font-weight: bold;
+      }
+      button {
+        background-color: #ff4500;
+        color: #ffffff;
+        border: none;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+      a {
+        color: #ff4500;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+      }
+      input {
+        color: #ffffff;
+      }
+      .swal2-popup {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        border-radius: 15px;
+        padding: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    </style>
+    <script>
+      function generatePasscode() {
+        var passcode = "";
+        var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        for (var i = 0; i < 20; i++) {
+          passcode += characters.charAt(
+            Math.floor(Math.random() * characters.length)
+          );
+          if ((i + 1) % 4 == 0 && i != 19) {
+            passcode += "-";
+          }
+        }
+        return passcode;
+      }
+      function onSubmit() {
+        var url = document.getElementById("url").value;
+        if (url.includes(domain)) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "You cannot shorten URLs that are the same as the domain we are currently on.",
+          });
+          return;
+        }
+        if (localStorage.getItem("nxtup")) {
+          const defaultPasscode = generatePasscode();
+          Swal.fire({
+            title: "Enter your passcode",
+            input: "text",
+            inputValue: defaultPasscode,
+            inputPlaceholder: "Enter your passcode",
+            showCancelButton: true,
+            confirmButtonText: "I've written my passcode down",
+            showLoaderOnConfirm: true,
+            preConfirm: (passcode) => {
+              localStorage.setItem("nxtup", passcode);
+              document.getElementById("passcode").value = passcode;
+              fetch("/api/link", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ url: url, passcode: passcode }),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  document.getElementById("url").value = data.shortUrl;
+                  navigator.clipboard.writeText(data.shortUrl);
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "URL has been copied to clipboard",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                });
+            },
+            allowOutsideClick: () => !Swal.isLoading(),
+          });
+        }
+      }
+    </script>
+  </head>
+  <body class="flex items-center justify-center h-screen">
+    <div class="glass container mx-auto px-4 py-8 max-w-md text-center">
+      <script>
+        var domain = window.location.hostname;
+      </script>
+      <h1 class="text-4xl font-bold mb-8" id="domainTitle">nxt</h1>
+      <script>
+        document.getElementById("domainTitle").textContent = domain;
+      </script>
+      <p class="mb-8 text-gray-400">
+        A privacy-first link shortener that does not have accounts and fully
+        relies on a passcode to manage your links.
+      </p>
+      <form
+        id="shortenForm"
+        action="/api/link"
+        method="post"
+        onsubmit="event.preventDefault(); onSubmit()"
+      >
+        <div class="flex items-center border-b border-teal-500 py-2">
+          <input
+            id="url"
+            class="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
+            type="text"
+            placeholder="Enter URL"
+            aria-label="Enter URL"
+            name="url"
+            required
+          />
+          <input
+            id="passcode"
+            class="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
+            type="hidden"
+            name="passcode"
+          />
+          <button
+            class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+            type="submit"
+          >
+            Shorten
+          </button>
+        </div>
+      </form>
+      <div class="mt-8">
+        <a href="/privacy.html" class="text-orange-500 hover:underline"
+          >Privacy</a
+        >
+        <span class="mx-2 text-orange-700">-</span>
+        <a href="/tos.html" class="text-orange-500 hover:underline"
+          >Terms of Service</a
+        >
+        <span class="mx-2 text-orange-700">-</span>
+        <a
+          href="https://github.com/abcdan/nxt"
+          class="text-orange-500 hover:underline"
+          >Source Code</a
+        >
+      </div>
+    </div>
+  </body>
+</html>
