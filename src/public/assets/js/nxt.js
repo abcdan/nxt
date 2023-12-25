@@ -77,7 +77,7 @@ function onSubmit() {
         document.getElementById("url").value = data.url;
         navigator.clipboard.writeText(data.url);
         Swal.fire({
-          title: "URL has been copied to clipboard",
+          title: "Copied link to clipboard 🔗",
           showConfirmButton: false,
           timer: 4500,
         });
@@ -107,7 +107,7 @@ function checkURL() {
       }, 1600);
       navigator.clipboard.writeText(url);
       Swal.fire({
-        title: "URL has been copied to clipboard",
+        title: "Copied link to clipboard 🔗",
         showConfirmButton: false,
         timer: 1500,
       });
