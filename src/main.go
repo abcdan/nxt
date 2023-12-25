@@ -2,9 +2,9 @@ package main
 
 import (
 	"log"
+	"nxt/routes"
 	"time"
 
-	"github.com/abcdan/nxt/src/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/joho/godotenv"

@@ -1,7 +1,8 @@
 package routes
 
 import (
-	"github.com/abcdan/nxt/src/helper"
+	"nxt/helper"
+
 	"github.com/gofiber/fiber/v2"
 )
 

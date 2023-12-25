@@ -1,10 +1,10 @@
 package routes
 
 import (
+	"nxt/helper"
+	"nxt/models"
 	"time"
 
-	"github.com/abcdan/nxt/src/helper"
-	"github.com/abcdan/nxt/src/models"
 	"github.com/gofiber/fiber/v2"
 )
 

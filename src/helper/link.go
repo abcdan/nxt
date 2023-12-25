@@ -2,8 +2,8 @@ package helper
 
 import (
 	"context"
+	"nxt/models"
 
-	"github.com/abcdan/nxt/src/models"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
