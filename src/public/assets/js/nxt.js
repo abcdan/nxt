@@ -1,7 +1,7 @@
 function generatePasscode() {
-  var passcode = "";
-  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  for (var i = 0; i < 20; i++) {
+  let passcode = "";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  for (let i = 0; i < 20; i++) {
     passcode += characters.charAt(
       Math.floor(Math.random() * characters.length)
     );
@@ -33,8 +33,8 @@ function getPasscode() {
   }
 }
 function onSubmit() {
-  var url = document.getElementById("url").value;
-  var urlPattern = /^(http|https):\/\/[^ "]+$/;
+  const url = document.getElementById("url").value;
+  const urlPattern = /^(http|https):\/\/[^ "]+$/;
   if (!urlPattern.test(url)) {
     Swal.fire({
       icon: "error",
@@ -43,6 +43,7 @@ function onSubmit() {
     });
     return;
   }
+  const domain = window.location.hostname;
   if (url.includes(domain)) {
     Swal.fire({
       icon: "error",
@@ -51,7 +52,7 @@ function onSubmit() {
     });
     return;
   }
-  var passcode = getPasscode();
+  const passcode = getPasscode();
   fetch("/api/link", {
     method: "POST",
     headers: {
@@ -93,8 +94,9 @@ function onSubmit() {
 }
 
 function checkURL() {
-  var url = document.getElementById("url").value;
-  var button = document.getElementById("actionButton");
+  const url = document.getElementById("url").value;
+  const button = document.getElementById("actionButton");
+  const domain = window.location.hostname;
   if (url.includes(domain)) {
     button.textContent = "Copy";
     button.onclick = function () {
