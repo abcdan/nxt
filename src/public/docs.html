@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Documentation - nxt</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="/assets/css/nxt.css" rel="stylesheet" />
+    <script src="/assets/js/nxt.js"></script>
+  </head>
+  <body class="flex items-center justify-center h-screen">
+    <div class="glass container mx-auto px-4 py-8 max-w-md text-center">
+      <h1 class="text-4xl font-bold mb-8">Documentation</h1>
+      <p class="mb-8 text-gray-400">
+        This documentation provides an overview of the API endpoints and their usage.
+        <ul>
+          <li><b>GET /:shortCode</b>: Redirects to the URL associated with the provided shortcode.</li>
+          <li><b>GET /api/preview/:shortCode</b>: Returns a JSON object with details about the link associated with the provided shortcode.</li>
+          <li><b>GET /api/statistics/links</b>: Fetches the total number of links.</li>
+          <li><b>GET /api/statistics/links/:shortcode</b>: Fetches the number of clicks for a specific link.</li>
+          <li><b>POST /api/link</b>: Creates a new link. Requires a JSON body with the "URL" field.</li>
+          <li><b>DELETE /api/link/:shortCode</b>: Deletes a link associated with the provided shortcode.</li>
+        </ul>
+        <br>
+        <h2 class="text-2xl font-bold mb-4">CURL Requests</h2>
+        <p>Create a new link:</p>
+        <code>curl -X POST -H "Content-Type: application/json" -d '{"URL":"http://example.com"}' http://localhost:3000/api/link</code>
+      </p>
+      <br>
+      <a href="/" class="text-white hover:underline">Back</a>
+    </div>
+  </body>
+</html>

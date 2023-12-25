@@ -7,6 +7,20 @@ import (
 )
 
 func RedirectRoutes(app *fiber.App) {
+	app.Get("/api/preview/:shortCode", func(c *fiber.Ctx) error {
+		shortCode := c.Params("shortCode")
+		link, err := helper.GetLinkByShortcode(shortCode)
+		if err != nil {
+			return c.Status(fiber.StatusNotFound).SendFile("./public/404.html")
+		}
+
+		return c.JSON(fiber.Map{
+			"short_code": link.ShortCode,
+			"url": link.URL,
+			"created_at": link.CreatedAt,
+		})
+	})
+
 	app.Get("/:shortCode", func(c *fiber.Ctx) error {
 	
 		shortCode := c.Params("shortCode")
