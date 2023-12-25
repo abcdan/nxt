@@ -141,11 +141,10 @@
               document.getElementById("url").value = data.url;
               navigator.clipboard.writeText(data.url);
               Swal.fire({
-                position: "top-end",
                 icon: "success",
                 title: "URL has been copied to clipboard",
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 4500,
               });
             }
           })
