@@ -25,10 +25,15 @@ func main() {
 	app.Static("/", "./public")
 	app.Static("/404", "./public/404.html")
 
+	app.Get("/health", func(c *fiber.Ctx) error {
+		return c.SendStatus(200)
+	})
+	
 	app.Use("/api", limiter.New(limiter.Config{
 		Max:        50,
 		Expiration: 1 * time.Minute,
 	}))
+
 
 	routes.LinkRoutes(app)
 	routes.RedirectRoutes(app)
