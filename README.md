@@ -22,6 +22,13 @@ No time to set it all up? Simply deploy on Railway with one click!
 
 The main interface of nxt is a web page where you can enter a URL to shorten. After submitting the URL, you will be provided with a shortened link and a passcode. The passcode is used to manage your links.
 
+Simply install Docker and Docker Compose and run the project by doing
+```
+docker-compose up (-d optionally if you want to run it without daemon)
+```
+
+That's it! Or hit the Railway button from above and deploy it with one click over there.
+
 ## Contributing
 
 Contributions to nxt are welcome! Please feel free to open an issue or submit a pull request.
