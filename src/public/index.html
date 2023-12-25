@@ -152,6 +152,28 @@
             console.error("Error:", error);
           });
       }
+      function checkURL() {
+        var url = document.getElementById("url").value;
+        var button = document.getElementById("actionButton");
+        if (url.includes(domain)) {
+          button.textContent = "Copy";
+          button.onclick = function () {
+            navigator.clipboard.writeText(url);
+            Swal.fire({
+              icon: "success",
+              title: "URL has been copied to clipboard",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          };
+        } else {
+          button.textContent = "Shorten";
+          button.onclick = onSubmit;
+        }
+      }
+      window.onload = function () {
+        document.getElementById("url").addEventListener("input", checkURL);
+      };
     </script>
   </head>
   <body class="flex items-center justify-center h-screen">
