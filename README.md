@@ -15,6 +15,7 @@ No time to set it all up? Simply deploy on Railway with one click!
 ## Features
 
 - 🔒 Privacy-First: We only store necessary data for the functionality of our service. We do not share your data with third parties unless required by law.
+- 📈 Simple statistics: Find out how many clicks your links are getting. UI in the making.
 - 🚫 No Accounts: nxt does not require accounts. It fully relies on a passcode to manage your links.
 - 📖 Open Source: nxt is open-source and licensed under the MIT License. You're free to use, modify, and distribute the software under the terms of this license.
 
