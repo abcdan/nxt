@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"nxt/routes"
+	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -36,6 +37,10 @@ func main() {
 		return c.Next()
 	})
 
-	app.Listen(":3000")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+	app.Listen(":" + port)
 }
 
