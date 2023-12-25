@@ -3,6 +3,7 @@ package routes
 import (
 	"nxt/helper"
 	"nxt/models"
+	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -31,7 +32,12 @@ func LinkRoutes(app *fiber.App) {
 			link.PassCode = &hashedPassCode
 		}
 
-		return c.JSON(link)
+		return c.JSON(fiber.Map{
+			"short_code": link.ShortCode,
+			"redirects_to": link.URL,
+			"url": "https://" + os.Getenv("DOMAIN") + "/" + link.ShortCode,
+			"created_at": link.CreatedAt,
+		})
 	})
 
 	app.Delete("/api/link/:shortCode", func(c *fiber.Ctx) error {
