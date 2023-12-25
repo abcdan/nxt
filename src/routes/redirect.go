@@ -31,6 +31,7 @@ func RedirectRoutes(app *fiber.App) {
 		if err != nil {
 			return c.Status(fiber.StatusNotFound).SendFile("./public/404.html")
 		}
+		helper.ClickToLink(link)
 		return c.Redirect(link.URL, fiber.StatusFound)
 	})
 }

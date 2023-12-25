@@ -49,7 +49,7 @@ func LinkRoutes(app *fiber.App) {
 			link.PassCode = &hashedPassCode
 		}
 
-		err := helper.InsertLink(link)
+		err = helper.InsertLink(link)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"error": "Cannot insert link into database",
