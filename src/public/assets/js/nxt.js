@@ -95,11 +95,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
   window.onload = function () {
     document.getElementById("url").addEventListener("input", checkURL);
+    document.getElementById("domainTitle").textContent = domain;
     fetch("/api/statistics/links")
       .then((response) => response.json())
       .then((data) => {
-        document.getElementById("domainTitle").textContent =
-          domain + " (" + data.links + ")";
+        document.getElementById("uploads").textContent =
+          " (" + data.links + ")";
       });
   };
 });
