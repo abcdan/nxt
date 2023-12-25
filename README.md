@@ -1,6 +1,12 @@
 # nxt - A Privacy-First Link Shortener 🌐🔒
 Welcome to nxt, a simple, fast, and secure link shortener written in Go. This open-source project is designed with privacy in mind, ensuring that your data is always protected.
 
+No time to set it all up? Simply deploy on Railway with one click!
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/gSvwgO?referralCode=QsZ-bg)
+
+ _Includes a referal code that helps the development of nxt_
+
 ## Stack
 
 - Golang with GoFiber
