@@ -3,9 +3,6 @@
 *.dll
 *.so
 *.dylib
-
 *.test
-
 *.out
-
 go.work
