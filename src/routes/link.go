@@ -4,6 +4,7 @@ import (
 	"nxt/helper"
 	"nxt/models"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,7 +19,14 @@ func LinkRoutes(app *fiber.App) {
 			})
 		}
 
-		link.ShortCode = helper.GenerateShortCode(6)
+		shortCodeLength, _ := strconv.Atoi(os.Getenv("SHORTCODE_LENGTH"))
+		for i := 0; i < 100; i++ {
+			link.ShortCode = helper.GenerateShortCode(shortCodeLength)
+			if _, err := helper.GetLinkByShortcode(link.ShortCode); err != nil {
+				break
+			}
+		}
+
 		link.CreatedAt = time.Now()
 		link.IP = helper.HashIP(c.IP())
 
@@ -32,6 +40,13 @@ func LinkRoutes(app *fiber.App) {
 			link.PassCode = &hashedPassCode
 		}
 
+		err := helper.InsertLink(link)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"error": "Cannot insert link into database",
+			})
+		}
+
 		return c.JSON(fiber.Map{
 			"short_code": link.ShortCode,
 			"redirects_to": link.URL,
@@ -42,14 +57,8 @@ func LinkRoutes(app *fiber.App) {
 
 	app.Delete("/api/link/:shortCode", func(c *fiber.Ctx) error {
 		shortCode := c.Params("shortCode")
-		link := new(models.Link)
 		link, err := helper.GetLinkByShortcode(shortCode)
 		if err != nil {
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-				"error": "Link not found",
-			})
-		}
-		if link != nil {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 				"error": "Link not found",
 			})
@@ -63,15 +72,8 @@ func LinkRoutes(app *fiber.App) {
 				})
 			}
 		} else {
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-				"error": "Link not found",
-			})
-		}
-
-		err = helper.DeleteLinkByShortcode(shortCode)
-		if err != nil {
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-				"error": "Link not found",
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"error": "Unauthorized",
 			})
 		}
 

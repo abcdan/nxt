@@ -20,3 +20,14 @@ func DeleteLinkByShortcode(shortcode string) error {
     _, err := db.Collection("links").DeleteOne(context.TODO(), bson.M{"short_code": shortcode})
     return err
 }
+
+func InsertLink(link *models.Link) error {
+    _, err := db.Collection("links").InsertOne(context.TODO(), bson.M{
+        "short_code": link.ShortCode,
+        "url": link.URL,
+        "pass_code": link.PassCode,
+        "created_at": link.CreatedAt,
+        "ip": link.IP,
+    })
+    return err
+}
