@@ -21,7 +21,6 @@ func LinkRoutes(app *fiber.App) {
 			})
 		}
 
-		// Check if the URL is valid and does not include the DOMAIN env variable
 		u, err := url.Parse(link.URL)
 		if err != nil || u.Scheme == "" || u.Host == "" || strings.Contains(link.URL, os.Getenv("DOMAIN")) {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
