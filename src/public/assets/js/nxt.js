@@ -70,6 +70,10 @@ function onSubmit() {
           text: data.error,
         });
       } else {
+        document.getElementById("card").style.display = "none";
+        setTimeout(function () {
+          document.getElementById("card").style.display = "block";
+        }, 4600);
         document.getElementById("url").value = data.url;
         navigator.clipboard.writeText(data.url);
         Swal.fire({
@@ -77,10 +81,6 @@ function onSubmit() {
           showConfirmButton: false,
           timer: 4500,
         });
-        document.getElementById("card").style.display = "none";
-        setTimeout(function () {
-          document.getElementById("card").style.display = "block";
-        }, 4500);
         fetch("/api/statistics/links")
           .then((response) => response.json())
           .then((data) => {
@@ -101,6 +101,10 @@ function checkURL() {
   if (url.includes(domain)) {
     button.textContent = "Copy";
     button.onclick = function () {
+      document.getElementById("card").style.display = "none";
+      setTimeout(function () {
+        document.getElementById("card").style.display = "block";
+      }, 1600);
       navigator.clipboard.writeText(url);
       Swal.fire({
         title: "URL has been copied to clipboard",
