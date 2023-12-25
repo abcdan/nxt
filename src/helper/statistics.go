@@ -27,6 +27,16 @@ func addClickToLink(link *models.Link, date string) {
         }
     }
 }
+
+func Clicks(link *models.Link) int {
+	var statistics models.Statistics
+	err := db.Collection("statistics").FindOne(context.TODO(), bson.M{"link_id": link.ShortCode}).Decode(&statistics)
+	if err != nil {
+		return 0
+	}
+	return statistics.Clicks
+}
+
 func ClickToLink(link *models.Link) error {
     addClickToLink(link, time.Now().Format("2006-01-02"))
     return nil
