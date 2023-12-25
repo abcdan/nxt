@@ -16,12 +16,12 @@ No time to set it all up? Simply deploy on Railway with one click!
 
 - 🔒 Privacy-First: We only store necessary data for the functionality of our service. We do not share your data with third parties unless required by law.
 - 📈 Simple statistics: Find out how many clicks your links are getting. UI in the making.
-- 🚫 No Accounts: nxt does not require accounts. It fully relies on a passcode to manage your links.
+- 🚫 No Accounts: nxt does not require accounts.
 - 📖 Open Source: nxt is open-source and licensed under the MIT License. You're free to use, modify, and distribute the software under the terms of this license.
 
 ## Usage
 
-The main interface of nxt is a web page where you can enter a URL to shorten. After submitting the URL, you will be provided with a shortened link and a passcode. The passcode is used to manage your links.
+The main interface of nxt is a web page where you can enter a URL to shorten. After submitting the URL, you will be provided with a shortened link.
 
 Simply install Docker and Docker Compose and run the project by doing
 ```

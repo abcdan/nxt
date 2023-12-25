@@ -1,37 +1,38 @@
-function generatePasscode() {
-  let passcode = "";
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  for (let i = 0; i < 20; i++) {
-    passcode += characters.charAt(
-      Math.floor(Math.random() * characters.length)
-    );
-    if ((i + 1) % 4 == 0 && i != 19) {
-      passcode += "-";
-    }
-  }
-  return passcode;
-}
-function getPasscode() {
-  if (localStorage.getItem("nxtup")) {
-    return localStorage.getItem("nxtup");
-  } else {
-    const defaultPasscode = generatePasscode();
-    Swal.fire({
-      title: "Enter your passcode",
-      input: "text",
-      inputValue: defaultPasscode,
-      inputPlaceholder: "Enter your passcode",
-      showCancelButton: true,
-      confirmButtonText: "I've written my passcode down",
-      showLoaderOnConfirm: true,
-      preConfirm: (passcode) => {
-        localStorage.setItem("nxtup", passcode);
-        document.getElementById("passcode").value = passcode;
-      },
-      allowOutsideClick: () => !Swal.isLoading(),
-    });
-  }
-}
+// Commented out passcode related code
+// function generatePasscode() {
+//   let passcode = "";
+//   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+//   for (let i = 0; i < 20; i++) {
+//     passcode += characters.charAt(
+//       Math.floor(Math.random() * characters.length)
+//     );
+//     if ((i + 1) % 4 == 0 && i != 19) {
+//       passcode += "-";
+//     }
+//   }
+//   return passcode;
+// }
+// function getPasscode() {
+//   if (localStorage.getItem("nxtup")) {
+//     return localStorage.getItem("nxtup");
+//   } else {
+//     const defaultPasscode = generatePasscode();
+//     Swal.fire({
+//       title: "Enter your passcode",
+//       input: "text",
+//       inputValue: defaultPasscode,
+//       inputPlaceholder: "Enter your passcode",
+//       showCancelButton: true,
+//       confirmButtonText: "I've written my passcode down",
+//       showLoaderOnConfirm: true,
+//       preConfirm: (passcode) => {
+//         localStorage.setItem("nxtup", passcode);
+//         document.getElementById("passcode").value = passcode;
+//       },
+//       allowOutsideClick: () => !Swal.isLoading(),
+//     });
+//   }
+// }
 function onSubmit() {
   const url = document.getElementById("url").value;
   const urlPattern = /^(http|https):\/\/[^ "]+$/;
@@ -52,13 +53,13 @@ function onSubmit() {
     });
     return;
   }
-  const passcode = getPasscode();
+  // const passcode = getPasscode();
   fetch("/api/link", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ url: url, passcode: passcode }),
+    body: JSON.stringify({ url: url }),
   })
     .then((response) => response.json())
     .then((data) => {
