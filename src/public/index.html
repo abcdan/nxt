@@ -138,8 +138,8 @@
                 text: data.error,
               });
             } else {
-              document.getElementById("url").value = data.shortUrl;
-              navigator.clipboard.writeText(data.shortUrl);
+              document.getElementById("url").value = data.url;
+              navigator.clipboard.writeText(data.url);
               Swal.fire({
                 position: "top-end",
                 icon: "success",
