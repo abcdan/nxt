@@ -1,5 +1,5 @@
 # nxt - A Privacy-First Link Shortener 🌐🔒
-Welcome to nxt, a simple, fast, and secure link shortener written in Go. This open-source project is designed with privacy in mind, ensuring that your data is always protected. A public version is hosted over at [nxt.mom](https://nxt.mom).
+Welcome to nxt, a simple, fast, and secure link shortener written in Go. This open-source project is designed with privacy in mind, ensuring that your data is always protected.
 
 No time to set it all up? Simply deploy on Railway with one click!
 
